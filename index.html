@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  // Author: Kayla Nussbaum
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="javascript/shoppingListApp.module.js"></script>
+  <script src="javascript/list.controller.js"></script>
+</head>
+<body>
+
+  <div ng-app="shoppingListApp" ng-controller="listCtrl" class="w3-card-2" style="max-width:400px;">
+    <header class="w3-container w3-pale-green w3-padding">
+      <h5 class="w3-center">Shopping List</h5>
+    </header>
+    <div class="w3-padding w3-blue-grey">
+      <td class="w3-text-grey">Total List Items:</td>
+      <td class="w3-right w3-margin-right w3-text-grey">{{ list.count }}</td>
+    </div>
+    <table class="w3-striped" style="width:100%;">
+      <tbody>
+        <tr>
+          <th class="w3-padding">Quan.</th>
+          <th class="w3-padding">Item</th>
+        </tr>
+        <tr ng-repeat="product in products">
+          <td class="w3-padding">{{ product.quantity }}</td>
+          <td class="w3-padding">{{ product.name }}</td>
+          <td><span ng-click="removeItem($index)" style="cursor:pointer;" class="w3-right w3-margin-right">&times;</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="w3-container w3-pale-green w3-padding-16 w3-center">
+      <form ng-submit="addProduct()">
+        <input ng-model="product.quantity" type="number" value="1" min="1" max="15" placeholder="#" style="display:inline;width:15%;" />
+        <input ng-model="product.name" type="text" placeholder="Item" style="display:inline;width:40%" required />
+        <button type="submit">+</button>
+      </form>
+      <p class="w3-text-red">{{ errorText }}</p>
+    </div>
+  </div>
+
+</body>
+</html>
