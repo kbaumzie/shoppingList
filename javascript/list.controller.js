@@ -2,44 +2,47 @@ angular
   .module("shoppingListApp")
   .controller("listCtrl", listCtrl);
 
-function listCtrl($scope) {
-  $scope.products = [];
-  $scope.list = [];
-  $scope.list.count = 0;
+function listCtrl() {
+  var vm = this;
 
-  $scope.addProduct = function () {
+  var locals = vm.locals = {};
+  vm.products = [];
+  vm.list = [];
+  vm.list.count = 0;
+
+  vm.addProduct = function (product) {
     var itemNames = [];
-    $scope.errorText = "";
+    vm.errorText = "";
 
     // add product names to temporary list to see if item exists
-    angular.forEach($scope.products, function (value) {
+    angular.forEach(vm.products, function (value) {
       this.push(value.name);
     }, itemNames);
 
-    if (itemNames.includes(capitalize($scope.product.name))) {
-      $scope.errorText = "This item is already in your shopping list.";
+    if (itemNames.includes(capitalize(product.name))) {
+      vm.errorText = "This item is already in your shopping list.";
     } else {
-      if ($scope.product.quantity == undefined) { $scope.product.quantity = 1; }
-      $scope.products.push({
-        name: capitalize($scope.product.name),
-        quantity: $scope.product.quantity
+      if (product.quantity == undefined) { product.quantity = 1; }
+      vm.products.push({
+        name: capitalize(product.name),
+        quantity: product.quantity
       });
-      $scope.list.push({ items: $scope.products });
-      $scope.list.count += $scope.product.quantity;
+      vm.list.push({ items: vm.products });
+      vm.list.count += product.quantity;
 
       // clear the form after adding product
-      $scope.product.name = '';
-      $scope.product.quantity = '';
+      product.name = '';
+      product.quantity = '';
     }
   }
 
-  $scope.removeItem = function (productIndex) {
-    $scope.errorText;
-    $scope.list.count -= $scope.products[productIndex].quantity;
-    $scope.products.splice(productIndex, 1);
+  vm.removeItem = function (productIndex) {
+    vm.errorText;
+    vm.list.count -= vm.products[productIndex].quantity;
+    vm.products.splice(productIndex, 1);
   }
 
-  function capitalize(string) {
+  var capitalize = locals.capitalize = function (string) {
     return string.replace(/\w\S*/g, function(newString) {
       return newString.charAt(0).toUpperCase() + newString.substr(1).toLowerCase();
     });
