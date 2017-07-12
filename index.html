@@ -1,10 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <style>
+  .productsList {
+  opacity: 1;
+  }
+  .productsList.ng-enter {
+    -webkit-transition: 1s;
+    transition: 1s;
+    opacity: 0;
+  }
+  .productsList.ng-enter-active {
+    opacity: 1;
+  }
+  </style>
   <!-- Author: Kayla Nussbaum -->
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
   <script src="javascript/shoppingListApp.module.js"></script>
   <script src="javascript/list.controller.js"></script>
 </head>
@@ -15,8 +30,8 @@
       <h5 class="w3-center">Shopping List</h5>
     </header>
     <div class="w3-padding w3-blue-grey">
-      <td class="w3-text-grey">Total List Items:</td>
-      <td class="w3-right w3-margin-right w3-text-grey">{{ list.list.count }}</td>
+      <span style="display:inline-block;" class="w3-text-white">Total List Items: {{ list.count }}</span>
+      <span style="display:inline-block;position:relative;right:0;top:0;float:right;"><button class="w3-text-red" ng-click="list.removeAll()"><i class="material-icons">delete_forever</i></button></span>
     </div>
     <table class="w3-striped" style="width:100%;">
       <tbody>
@@ -24,7 +39,7 @@
           <th class="w3-padding">Quan.</th>
           <th class="w3-padding">Item</th>
         </tr>
-        <tr ng-repeat="product in list.products">
+        <tr class="productsList" ng-repeat="product in list.products">
           <td class="w3-padding">{{ product.quantity }}</td>
           <td class="w3-padding">{{ product.name }}</td>
           <td><span ng-click="list.removeItem($index)" style="cursor:pointer;" class="w3-right w3-margin-right">&times;</span></td>
@@ -37,7 +52,7 @@
         <input ng-model="product.name" type="text" placeholder="Item" style="display:inline;width:40%" required />
         <button type="submit">+</button>
       </form>
-      <p class="w3-text-red">{{ errorText }}</p>
+      <p class="w3-text-red">{{ list.errorText }}</p>
     </div>
   </div>
 

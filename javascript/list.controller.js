@@ -7,8 +7,7 @@ function listCtrl() {
 
   var locals = vm.locals = {};
   vm.products = [];
-  vm.list = [];
-  vm.list.count = 0;
+  vm.count = 0;
 
   vm.addProduct = function (product) {
     var itemNames = [];
@@ -27,8 +26,7 @@ function listCtrl() {
         name: capitalize(product.name),
         quantity: product.quantity
       });
-      vm.list.push({ items: vm.products });
-      vm.list.count += product.quantity;
+      vm.count += product.quantity;
 
       // clear the form after adding product
       product.name = '';
@@ -38,8 +36,13 @@ function listCtrl() {
 
   vm.removeItem = function (productIndex) {
     vm.errorText;
-    vm.list.count -= vm.products[productIndex].quantity;
+    vm.count -= vm.products[productIndex].quantity;
     vm.products.splice(productIndex, 1);
+  }
+
+  vm.removeAll = function () {
+    vm.products = [];
+    vm.count = 0;
   }
 
   var capitalize = locals.capitalize = function (string) {
